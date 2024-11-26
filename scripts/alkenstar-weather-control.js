@@ -9,9 +9,9 @@ import { getRandomSpell } from "./random-spell.js";
 import { applyRandomWeather } from "./random-weather.js";
 
 Hooks.once("ready", () => {
-  game.alkenstarWeatherControl = game.alkenstarWeatherControl || {};
-  game.alkenstarWeatherControl.getRandomSpell = getRandomSpell;
-  game.alkenstarWeatherControl.applyRandomWeather = applyRandomWeather;
+  game.alkenstarWeather = game.alkenstarWeather || {};
+  game.alkenstarWeather.getRandomSpell = getRandomSpell;
+  game.alkenstarWeather.applyRandomWeather = applyRandomWeather;
 });
 
 Hooks.once("init", () => {
