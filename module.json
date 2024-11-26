@@ -1,0 +1,43 @@
+{
+  "name": "alkenstar-weather",
+  "title": "Alkenstar Weather Control",
+  "description": "A module to control Alkenstar's Surge Time, Bronze Time, and Dead Time mechanics.",
+  "version": "#{version}",
+  "manifest": "#{manifest}",
+  "download": "#{download}",
+  "compatibility": {
+    "minimum": "10",
+    "verified": "12"
+  },
+  "esmodules": ["scripts/alkenstar-weather.js"],
+  "packs": [
+    {
+      "name": "weather-effects",
+      "label": "Alkenstar Weather Effects",
+      "path": "packs/alkenstar-weather-effects",
+      "type": "Item",
+      "system": "pf2e"
+    },
+    {
+      "name": "weather-macros",
+      "label": "Alkenstar Weather Macros",
+      "path": "packs/alkenstar-weather-macros",
+      "type": "Macro",
+      "system": "pf2e"
+    },
+    {
+      "name": "weather-tables",
+      "label": "Alkenstar Weather Tables",
+      "path": "packs/alkenstar-weather-tables",
+      "type": "RollTable",
+      "system": "pf2e"
+    },
+    {
+      "name": "random-spell-tables",
+      "label": "Random Spell Tables",
+      "path": "packs/random-spell-tables",
+      "type": "RollTable",
+      "system": "pf2e"
+    }
+  ]
+}

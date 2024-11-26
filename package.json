@@ -1,0 +1,18 @@
+{
+  "name": "alkenstar-weather",
+  "version": "1.0.0",
+  "description": "A module to control Alkenstar's weather mechanics for FoundryVTT",
+  "main": "index.js",
+  "scripts": {
+    "watch": "node watch-and-copy.js ."
+  },
+  "keywords": [
+    "foundryVTT",
+    "pf2e"
+  ],
+  "author": "Mallory Allen",
+  "license": "MIT",
+  "dependencies": {
+    "chokidar": "^4.0.1"
+  }
+}
