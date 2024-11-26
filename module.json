@@ -1,5 +1,5 @@
 {
-  "name": "alkenstar-weather",
+  "id": "pf2e-alkenstar-weather-control",
   "title": "Alkenstar Weather Control",
   "description": "A module to control Alkenstar's Surge Time, Bronze Time, and Dead Time mechanics.",
   "version": "#{version}",
@@ -9,7 +9,7 @@
     "minimum": "10",
     "verified": "12"
   },
-  "esmodules": ["scripts/alkenstar-weather.js"],
+  "esmodules": ["scripts/alkenstar-weather-control.js"],
   "packs": [
     {
       "name": "weather-effects",

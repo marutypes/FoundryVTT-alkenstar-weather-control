@@ -2,15 +2,16 @@ import {
   MODULE_NAMESPACE,
   WEATHER_NAMES_BY_VALUE,
   WEATHER_IMAGES,
+  WEATHER_VALUES_BY_NAME,
 } from "./constants.js";
 import { openWeatherSelector } from "./weather-selector.js";
 import { getRandomSpell } from "./random-spell.js";
 import { applyRandomWeather } from "./random-weather.js";
 
 Hooks.once("ready", () => {
-  game.alkenstarWeather = game.alkenstarWeather || {};
-  game.alkenstarWeather.getRandomSpell = getRandomSpell;
-  game.alkenstarWeather.applyRandomWeather = applyRandomWeather;
+  game.alkenstarWeatherControl = game.alkenstarWeatherControl || {};
+  game.alkenstarWeatherControl.getRandomSpell = getRandomSpell;
+  game.alkenstarWeatherControl.applyRandomWeather = applyRandomWeather;
 });
 
 Hooks.once("init", () => {
@@ -35,7 +36,7 @@ Hooks.once("init", () => {
       const macroName = game.settings.get(MODULE_NAMESPACE, macroSettingName);
       const macro = game.macros.getName(macroName);
 
-      if (macro) {
+      if (macro != null) {
         macro.execute();
       }
 
@@ -94,7 +95,7 @@ Hooks.once("init", () => {
     scope: "world",
     config: true,
     type: String,
-    default: "",
+    default: "Bronze Time Macro",
   });
 
   game.settings.register(MODULE_NAMESPACE, "surgeTimeMacro", {
@@ -103,7 +104,7 @@ Hooks.once("init", () => {
     scope: "world",
     config: true,
     type: String,
-    default: "",
+    default: "Surge Time Macro",
   });
 
   game.settings.register(MODULE_NAMESPACE, "deadTimeMacro", {
@@ -112,7 +113,16 @@ Hooks.once("init", () => {
     scope: "world",
     config: true,
     type: String,
-    default: "",
+    default: "Dead Time Macro",
+  });
+
+  game.settings.register(MODULE_NAMESPACE, "noneMacro", {
+    name: "No Weather Macro",
+    hint: "The macro to run (if any) when switching to None",
+    scope: "world",
+    config: true,
+    type: String,
+    default: "None Macro",
   });
 
   game.settings.register(MODULE_NAMESPACE, "applyEffectsToPlayers", {
@@ -229,16 +239,17 @@ Hooks.on("renderChatMessage", (message, html, data) => {
     const tableName = game.settings
       .get(MODULE_NAMESPACE, "surgeTimeTableName")
       .trim();
-    if (tableName) {
-      const table = game.tables.getName(tableName);
-      if (table) {
-        await table.draw();
-      } else {
-        ui.notifications.error(
-          `Alkenstar Weather Control | Rollable Table "${tableName}" not found. Make sure you've imported the Alkenstar Weather Tables compendium`
-        );
-      }
+
+    const table = await getTableByName(tableName);
+
+    if (table == null) {
+      ui.notifications.error(
+        `Alkenstar Weather Control | Rollable Table "${tableName}" not found in world or compendium.`
+      );
+      return;
     }
+
+    await table.draw();
   });
 });
 
@@ -266,6 +277,11 @@ async function applyWeatherEffects(weatherValue) {
   );
 
   await removeWeatherEffects();
+
+  if (weatherValue == WEATHER_VALUES_BY_NAME.None) {
+    // no effects for none
+    return;
+  }
 
   // Get the effect name from settings
   const effectSettingKey = `${weatherValue}EffectName`;
@@ -325,19 +341,44 @@ async function getEffectByName(effectName) {
   // Try to get the effect from world items
   let effectItem = game.items.getName(effectName);
 
-  if (effectItem) {
+  if (effectItem != null) {
     return effectItem;
   }
 
   // Try to get the effect from the compendium
-  const pack = game.packs.get("alkenstar-weather.weather-effects");
-  if (pack) {
+  const pack = game.packs.get(`${MODULE_NAMESPACE}.weather-effects`);
+  if (pack != null) {
     // Get the effect from the compendium by name
     const index = await pack.getIndex();
     const entry = index.find((e) => e.name === effectName);
     if (entry) {
       effectItem = await pack.getDocument(entry._id);
       return effectItem;
+    }
+  }
+
+  // If not found, return null
+  return null;
+}
+
+async function getTableByName(tableName) {
+  console.log("Alkenstar Weather Control |", "FINDING TABLE");
+  // Try to get the table from world
+  let table = game.tables.getName(tableName);
+
+  if (table != null) {
+    return table;
+  }
+
+  // Try to get the table from the compendium
+  const pack = game.packs.get(`${MODULE_NAMESPACE}.weather-tables`);
+  if (pack) {
+    // Get the table from the compendium by name
+    const index = await pack.getIndex();
+    const entry = index.find((e) => e.name === tableName);
+    if (entry) {
+      table = await pack.getDocument(entry._id);
+      return table;
     }
   }
 
