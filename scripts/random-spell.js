@@ -1,10 +1,12 @@
+import { MODULE_NAMESPACE } from "./constants.js";
+
 export async function getRandomSpell(rank) {
   const tableName = `Random Spell Rank ${rank}`;
   let table = game.tables.getName(tableName);
 
   if (!table) {
     // Try to find the table in the module's compendium pack
-    const pack = game.packs.get("alkenstar-weather.random-spell-tables"); // Adjust the pack name accordingly
+    const pack = game.packs.get(`${MODULE_NAMESPACE}.random-spell-tables`);
     if (pack) {
       // Load the index of the compendium
       await pack.getIndex();
