@@ -252,7 +252,7 @@ Hooks.on("getSceneControlButtons", (controls) => {
       name: "alkenstar-weather-selector",
       title: "Select Alkenstar Weather",
       icon: "fas fa-cloud-sun-rain",
-      visible: game.user.isGM, // Only visible to the GM
+      visible: game.user.isGM,
       onClick: () => openWeatherSelector(),
       button: true,
     });

@@ -80,8 +80,6 @@ This module support three weather conditions:
 
 #### **Surge Time Table**
 
-Instead of writing out the entire table, here's a visual representation:
-
 ![Surge Time Table](pics/table-surge-time.png)
 
 When a spell is cast during Surge Time, the module will automatically roll on the Surge Time Table and output the corresponding status effects to chat, such as **Empowered Spell** or **Mutate Spell**, which are included in the compendium packs. Some of these are meant to be done manually, such as explosion, refunded, reversed, or deflected.
