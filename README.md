@@ -17,6 +17,8 @@ This module offers:
 - **Integration with rollable tables** for Surge Time spell effects.
 - **Customizable settings** to let you hook up custom effects for each weather setting.
 
+I created it for an Outlaws of Alkenstar campaign I'll be playing in, but you could use it for any campaign that wants to use the Mana Wastes weather as a mechanic.
+
 ## Installation
 
 ### From the Foundry VTT Module Browser
@@ -52,7 +54,7 @@ Access the module settings via **"Configure Settings"** > **"Module Settings"**:
 
 ## Understanding the Weather Conditions
 
-This module support three weather conditions:
+This module support three weather conditions, as well as "none" (no special weather effects):
 
 ### **Dead Time**
 
