@@ -118,11 +118,11 @@ Hooks.once("init", () => {
 
   game.settings.register(MODULE_NAMESPACE, "noneMacro", {
     name: "No Weather Macro",
-    hint: "The macro to run (if any) when switching to None",
+    hint: "The macro to run (if any) when switching to no weather",
     scope: "world",
     config: true,
     type: String,
-    default: "None Macro",
+    default: "No Weather Macro",
   });
 
   game.settings.register(MODULE_NAMESPACE, "applyEffectsToPlayers", {
@@ -151,6 +151,10 @@ Hooks.once("init", () => {
     type: Boolean,
     default: false,
   });
+
+  
+  console.log("Alkenstar Weather Control |", "Initialization complete!");
+
 });
 
 Hooks.on("createChatMessage", async (msg) => {
